@@ -2,8 +2,7 @@
 
 Convert pyannote-audio's speaker diarization pipeline to C++.
 
-**Note**: this project is more like a experiement, not product ready. More optimization work needs to 
-be done to integrate it to product, such as performance.
+**Note**: this project is more like an experiement, not product ready in terms of performance. 
 
 Whole pipeline is splitted into 3 stages,
 - segment
@@ -15,30 +14,6 @@ For segment and embedding part,
 2. convert pre-embedding, post-embedding, pre-segment, post-segment.
 
 For clustering, convert all python code to C++ code.
-
-# Model 
-
-## Export model
-- segmenation
-segment/export2.py
-
-- embedding
-embeddings/export3.py
-
-If you want to export model by yourself, follow steps below, otherwise you may use
-pre-exported models in model folder.
-
-Create conda evironment
-```
-$> conda create --name sd_env
-$> conda activate sd_env
-$> cd embedding
-$> python -m pip install -r requirements.txt
-$> cd segment
-$> python export2.py
-$> cd embedding
-$> python export3.py
-```
 
 # Build
 
@@ -72,6 +47,30 @@ Example output,
 [39.2934 -- 47.2416] --> Speaker_3
 [46.4484 -- 52.7934] --> Speaker_2
 [52.5066 -- 58.4634] --> Speaker_3
+```
+
+# Model 
+
+## Export model
+- segmenation
+segment/export2.py
+
+- embedding
+embeddings/export3.py
+
+If you want to export model by yourself, follow steps below, otherwise you may use
+pre-exported models in model folder.
+
+Create conda evironment
+```
+$> conda create --name sd_env
+$> conda activate sd_env
+$> cd embedding
+$> python -m pip install -r requirements.txt
+$> cd segment
+$> python export2.py
+$> cd embedding
+$> python export3.py
 ```
 
 # Verification
