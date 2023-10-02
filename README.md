@@ -2,6 +2,9 @@
 
 Convert pyannote-audio's speaker diarization pipeline to C++.
 
+**Note**: this project is more like a experiement, not product ready. More optimization work needs to 
+be done to integrate it to product, such as performance.
+
 Whole pipeline is splitted into 3 stages,
 - segment
 - embedding
@@ -52,25 +55,31 @@ $> mkdir build && cd build
 $> cmake ..
 $> make
 ```
-If want build GPU version
+Build GPU version
 ```
 $> cmake -DGPU=ON ..
 $> make
 ```
 
+GPU option is for libtorch. For onnxruntime, it is hard coded to be running on GPU. 
+
 # Run
-./speakerDiarizer ../../segment/segment2.onnx ../../embeddings/emd4.onnx ~/storage/sharedFolderVirtualbox/audioForTesting/english_15s16k.wav
+Wave file must be 16k sample rate, 1 channel and 16bit.
+``` bash
+./speakerDiarizer ../model/segment2.onnx ../model/emd4.onnx ../data/multi-speaker_1min.wav
+```
 
-# onnxruntime to GPU
-It seems no need change code, instead set cuda when convert to model. For segment.onnx model, change source 
-a) add following line to model = ....
-model.cuda() 
-b) change 
-dummy_input = torch.zeros(3, 1, 32000)
--->
-dummy_input = torch.zeros(3, 1, 32000).cuda()
-
-change onnx.cmake to download gpu version of onnxruntime
+Example output,
+``` bash
+----------------------------------------------------
+[5.22281 -- 17.7441] --> Speaker_3
+[17.8116 -- 25.2197] --> Speaker_0
+[25.3041 -- 28.4428] --> Speaker_3
+[28.4428 -- 39.2934] --> Speaker_1
+[39.2934 -- 47.2416] --> Speaker_3
+[46.4484 -- 52.7934] --> Speaker_2
+[52.5066 -- 58.4634] --> Speaker_3
+```
 
 # Verification
 Since whole project is to translate pyannote-audio speaker diarization pipleline from python to C++, strategy I adopted here is 
@@ -85,8 +94,17 @@ Above command is to compare txt files generated /tmp. and command below is to de
 $> python verifyEveryStepResult.py clean
 ```
 
+# Known issue
+Performance is main problem. Even it runs on GPU for pytorch part, more percisely, STFT part, it takes 356 seconds for test 
+wave file included in data folder in a machine with nvidia 2070S and 16 threads CPU.
 
-# For hierichical clustering
+# Target
+
+Next step is to remove dependency to libtorch, which is currently only for STFT calcualtion.
+
+# References
+
+## For hierichical clustering
 tried following
 - hclust-cpp/fastcluster
 https://github.com/cdalitz/hclust-cpp
@@ -100,12 +118,8 @@ centroid_linkage is empty
 https://www.alglib.net/dataanalysis/clustering.php
 does not support centriod
 
-python code used is,
-/home/leo/product/speaker_diarization/diarization/lib/python3.10/site-packages/pyannote
 
-There is a lot code added. Search "LIYI" by command grep to find them
+# Thanks
 
-- k-means library
-https://github.com/aditya1601/kmeans-clustering-cpp
-
-
+- [pyannote-audio](https://github.com/pyannote/pyannote-audio)
+- [pyannote-onnx](https://github.com/pengzhendong/pyannote-onnx)
