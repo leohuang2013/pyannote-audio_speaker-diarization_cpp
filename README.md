@@ -10,7 +10,7 @@ Whole pipeline is splitted into 3 stages,
 - clustering
 
 For segment and embedding part,
-1. export embedding and segmentation model,
+1. export embedding and segmentation from python code to onnx model,
 2. convert pre-embedding, post-embedding, pre-segment, post-segment.
 
 For clustering, convert all python code to C++ code.
@@ -100,8 +100,13 @@ to tiny difffernce which will leads to different result compared with result gen
 
 
 # Known issue
+
+## Performance
 Performance is main problem. Even it runs on GPU for pytorch part, more percisely, STFT part, it takes 356 seconds for test 
 wave file included in data folder in a machine with nvidia 2070S and 16 threads CPU.
+
+## Accuracy
+For some audio, there will be slight discrepency between this project and pyannote-audio. 
 
 # Target
 
