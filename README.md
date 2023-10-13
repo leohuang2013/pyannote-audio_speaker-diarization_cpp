@@ -2,16 +2,14 @@
 
 Convert pyannote-audio's speaker diarization pipeline to C++.
 
-**Note**: this project is more like an experiement, not product ready in terms of performance. 
-
 Whole pipeline is splitted into 3 stages,
 - segment
 - embedding
 - clustering
 
 For segment and embedding part,
-1. export embedding and segmentation from python code to onnx model,
-2. convert pre-embedding, post-embedding, pre-segment, post-segment.
+1. export embedding and segmentation from python code to onnx model, which later be used in c++.
+2. convert pre-embedding, post-embedding, pre-segment, post-segment to c++.
 
 For clustering, convert all python code to C++ code.
 
@@ -111,6 +109,11 @@ For some audio, there will be slight discrepency between this project and pyanno
 # Target
 
 Next step is to remove dependency to libtorch, which is currently only for STFT calcualtion.
+
+Currently all tensor operations are implemented on our own, [xtensor](https://github.com/xtensor-stack/xtensor) could be an option, to replace them
+for sake of performance.
+
+Although libtorch also provides tensor operations, it is too big in terms of size, therefore it is not good option here.
 
 # References
 
