@@ -36,7 +36,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-*/**/*.onnx
 embeddings/pretrained
 pipeline/fc_base-GNU
 pipeline/build
