@@ -40,7 +40,6 @@ __pycache__/
 embeddings/pretrained
 pipeline/fc_base-GNU
 pipeline/build
-pipeline/model
 pipeline/src/tmp
 pipeline/src/clustering/cluster
 segment/cpp/src/eigen-3.4.0
