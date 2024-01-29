@@ -103,6 +103,8 @@ to tiny difffernce which will leads to different result compared with result gen
 Performance is main problem. Even it runs on GPU for pytorch part, more percisely, STFT part, it takes 356 seconds for test 
 wave file included in data folder in a machine with nvidia 2070S and 16 threads CPU.
 
+STFT is part of second stage of pipeline: Embedding.
+
 ## Accuracy
 For some audio, there will be slight discrepency between this project and pyannote-audio. 
 
@@ -113,23 +115,22 @@ Next step is to remove dependency to libtorch, which is currently only for STFT 
 Currently all tensor operations are implemented on our own, [xtensor](https://github.com/xtensor-stack/xtensor) could be an option, to replace them
 for sake of performance.
 
-Although libtorch also provides tensor operations, it is too big in terms of size, therefore it is not good option here.
 
 # References
 
 ## For hierichical clustering
-tried following
+Have tried following methods,
 - hclust-cpp/fastcluster
 https://github.com/cdalitz/hclust-cpp
-result is wrong, including distance of clusters and result 'fcluster'
+Result is wrong, including distance of clusters and result 'fcluster'
 
 - agglomerative-hierarchical-clustering
 https://github.com/gyaikhom/agglomerative-hierarchical-clustering/tree/master
-centroid_linkage is empty
+The result returned by centroid_linkage is empty
 
 - alglib
 https://www.alglib.net/dataanalysis/clustering.php
-does not support centriod
+It does not support centriod which is needed in this project.
 
 
 # Thanks
