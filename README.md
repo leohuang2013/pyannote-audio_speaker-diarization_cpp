@@ -1,4 +1,4 @@
-# speaker_diarization_prototype
+# Speaker Diarization Prototype in C++
 
 Convert pyannote-audio's speaker diarization pipeline to C++.
 
@@ -12,6 +12,10 @@ For segment and embedding part,
 2. convert pre-embedding, post-embedding, pre-segment, post-segment to c++.
 
 For clustering, convert all python code to C++ code.
+
+# Sibling Project
+[Overlapped Speech Detectation in C++](https://github.com/leohuang2013/pyannote-audio_overlapped-speech-detection_cpp)
+
 
 # Build
 
